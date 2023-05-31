@@ -33,7 +33,9 @@ class LabelDocument < Prawn::Document
       rows,
       cell_style: {
         width: column_width,
-        height: row_height
+        height: row_height,
+        border_width: 0,
+        padding: 0
       }
     )
   end
