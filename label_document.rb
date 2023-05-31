@@ -29,10 +29,20 @@ class LabelDocument < Prawn::Document
       recipients_for_row.map { |recipient| "#{recipient[:name]}\n#{recipient[:address]}" }
     end
 
-    table(rows, cell_style: { width: column_width })
+    table(
+      rows,
+      cell_style: {
+        width: column_width,
+        height: row_height
+      }
+    )
   end
 
   def column_width
     bounds.width / COLUMN_COUNT
+  end
+
+  def row_height
+    (bounds.height - 10) / ROW_COUNT
   end
 end
