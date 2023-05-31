@@ -9,20 +9,25 @@ class LabelDocument < Prawn::Document
   def initialize(recipients, options = {})
     super(options)
     Prawn::Fonts::AFM.hide_m17n_warning = true
-    create_labels(recipients)
+    print_labels(recipients)
   end
 
-  def create_labels(recipients)
-    recipients.each_slice(ROW_COUNT * COLUMN_COUNT).map do |recipients_for_page|
-      font_size(FONT_SIZE) do
-        rows = recipients_for_page.each_slice(COLUMN_COUNT).map do |recipients_for_row|
-          recipients_for_row.map { |recipient| "#{recipient[:name]}\n#{recipient[:address]}" }
-        end
-
-        table(rows)
+  def print_labels(recipients)
+    font_size(FONT_SIZE) do
+      recipients.each_slice(ROW_COUNT * COLUMN_COUNT).map do |recipients_for_page|
+        print_page(recipients_for_page)
+        start_new_page
       end
-
-      start_new_page
     end
+  end
+
+  private
+
+  def print_page(recipients)
+    rows = recipients.each_slice(COLUMN_COUNT).map do |recipients_for_row|
+      recipients_for_row.map { |recipient| "#{recipient[:name]}\n#{recipient[:address]}" }
+    end
+
+    table(rows)
   end
 end
