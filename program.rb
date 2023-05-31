@@ -1,7 +1,7 @@
 require "pry"
 require "json"
 require "net/http"
-require_relative "pdf_document"
+require_relative "label_document"
 
 FORM_ID = 28
 PAGE_SIZE = 50
@@ -49,7 +49,7 @@ end
 puts
 puts "Rendering PDF..."
 
-pdf_document = PDFDocument.new(recipients)
-pdf_document.render_file("labels.pdf")
+label_document = LabelDocument.new(recipients)
+label_document.render_file("labels.pdf")
 
 puts "Done"

@@ -1,7 +1,7 @@
 require "prawn"
 require "prawn/table"
 
-class PDFDocument < Prawn::Document
+class LabelDocument < Prawn::Document
   COLUMN_COUNT = 3
   ROW_COUNT = 10
   FONT_SIZE = 10 # Adjust the font size as desired
