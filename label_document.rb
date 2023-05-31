@@ -4,7 +4,7 @@ require "prawn/table"
 class LabelDocument < Prawn::Document
   COLUMN_COUNT = 3
   ROW_COUNT = 10
-  FONT_SIZE = 10
+  FONT_SIZE = 8
 
   def initialize(recipients, options = {})
     super(options)
@@ -29,6 +29,10 @@ class LabelDocument < Prawn::Document
       recipients_for_row.map { |recipient| "#{recipient[:name]}\n#{recipient[:address]}" }
     end
 
-    table(rows)
+    table(rows, cell_style: { width: column_width })
+  end
+
+  def column_width
+    bounds.width / COLUMN_COUNT
   end
 end
