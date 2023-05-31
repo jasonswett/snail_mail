@@ -4,7 +4,7 @@ require "prawn/table"
 class LabelDocument < Prawn::Document
   COLUMN_COUNT = 3
   ROW_COUNT = 10
-  FONT_SIZE = 10 # Adjust the font size as desired
+  FONT_SIZE = 10
 
   def initialize(recipients, options = {})
     super(options)
@@ -13,12 +13,16 @@ class LabelDocument < Prawn::Document
   end
 
   def create_labels(recipients)
-    font_size(FONT_SIZE) do
-      rows = recipients.each_slice(COLUMN_COUNT).map do |group|
-        group.map { |recipient| "#{recipient[:name]}\n#{recipient[:address]}" }
+    recipients.each_slice(ROW_COUNT * COLUMN_COUNT).map do |recipients_for_page|
+      font_size(FONT_SIZE) do
+        rows = recipients_for_page.each_slice(COLUMN_COUNT).map do |recipients_for_row|
+          recipients_for_row.map { |recipient| "#{recipient[:name]}\n#{recipient[:address]}" }
+        end
+
+        table(rows)
       end
 
-      table(rows)
+      start_new_page
     end
   end
 end
