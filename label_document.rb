@@ -6,6 +6,7 @@ class LabelDocument < Prawn::Document
   ROW_COUNT = 10
   FONT_SIZE = 8
   TOP_MARGIN = 40
+  COLUMN_WIDTH_OFFSET = 40
 
   def initialize(recipients, options = {})
     super(options)
@@ -34,17 +35,33 @@ class LabelDocument < Prawn::Document
       table(
         rows,
         cell_style: {
-          width: column_width,
           height: row_height,
           border_width: 0,
           padding: 0
-        }
+        },
+        column_widths: column_widths
       )
     end
   end
 
-  def column_width
-    bounds.width / COLUMN_COUNT
+  def column_widths
+    [
+      wide_column_width,
+      wide_column_width,
+      narrow_column_width
+    ]
+  end
+
+  def wide_column_width
+    overly_wide_width / COLUMN_COUNT
+  end
+
+  def narrow_column_width
+    bounds.width - (wide_column_width * 2)
+  end
+
+  def overly_wide_width
+    bounds.width + COLUMN_WIDTH_OFFSET
   end
 
   def row_height
