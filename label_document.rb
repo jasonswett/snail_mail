@@ -5,6 +5,7 @@ class LabelDocument < Prawn::Document
   COLUMN_COUNT = 3
   ROW_COUNT = 10
   FONT_SIZE = 8
+  TOP_MARGIN = 40
 
   def initialize(recipients, options = {})
     super(options)
@@ -29,15 +30,17 @@ class LabelDocument < Prawn::Document
       recipients_for_row.map { |recipient| "#{recipient[:name]}\n#{recipient[:address]}" }
     end
 
-    table(
-      rows,
-      cell_style: {
-        width: column_width,
-        height: row_height,
-        border_width: 0,
-        padding: 0
-      }
-    )
+    bounding_box([bounds.left, bounds.top - TOP_MARGIN], width: bounds.width, height: bounds.height - TOP_MARGIN) do
+      table(
+        rows,
+        cell_style: {
+          width: column_width,
+          height: row_height,
+          border_width: 0,
+          padding: 0
+        }
+      )
+    end
   end
 
   def column_width
