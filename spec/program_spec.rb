@@ -4,8 +4,8 @@ require_relative "../program"
 
 ENTRIES_ENDPOINT_URL = "https://www.codewithjason.com/wp-json/gf/v2/entries"
 
-describe "#run" do
-  it "works" do
+describe "#consuming recipients" do
+  before do
     response_body = {
       "entries" => [
         {
@@ -24,7 +24,9 @@ describe "#run" do
       body: response_body.to_json.to_s,
       headers: {}
     )
+  end
 
+  it "includes the recipient" do
     expect(recipients.first).to include(
       name: "Jason Swett",
       address: "16601 Myers Lake Ave"
