@@ -32,21 +32,25 @@ def response(uri, request)
   end
 end
 
+def response_json(offset)
+  uri = uri(offset)
+  request = request(uri)
+  response = response(uri, request)
+
+  if !response.code.to_i == 200
+    raise "HTTP Request failed (status code #{response.code})"
+  end
+
+  JSON.parse(response.body)
+end
+
 def run
   offset = 0
   recipients = []
   print "Downloading recipients..."
 
   loop do
-    uri = uri(offset)
-    request = request(uri)
-    response = response(uri, request)
-
-    if !response.code.to_i == 200
-      raise "HTTP Request failed (status code #{response.code})"
-    end
-
-    response_json = JSON.parse(response.body)
+    response_json = response_json(offset)
     total_count = response_json["total_count"]
 
     recipients += response_json["entries"].map do |entry|
