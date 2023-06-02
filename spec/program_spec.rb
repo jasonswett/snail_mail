@@ -7,8 +7,13 @@ ENTRIES_ENDPOINT_URL = "https://www.codewithjason.com/wp-json/gf/v2/entries"
 describe "#run" do
   it "works" do
     response_body = {
-      "entries" => [],
-      "total_count" => 3
+      "entries" => [
+        {
+          "1" => "Jason Swett",
+          "2" => "16601 Myers Lake Ave"
+        }
+      ],
+      "total_count" => 1
     }
 
     stub_request(
@@ -20,6 +25,9 @@ describe "#run" do
       headers: {}
     )
 
-    run_program
+    expect(recipients.first).to include(
+      name: "Jason Swett",
+      address: "16601 Myers Lake Ave"
+    )
   end
 end

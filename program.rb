@@ -44,7 +44,7 @@ def response_json(offset)
   JSON.parse(response.body)
 end
 
-def run_program
+def recipients
   offset = 0
   recipients = []
   print "Downloading recipients..."
@@ -65,11 +65,5 @@ def run_program
     break if offset >= total_count
   end
 
-  puts
-  puts "Rendering PDF..."
-
-  label_document = LabelDocument.new(recipients)
-  label_document.render_file("labels.pdf")
-
-  puts "Done"
+  recipients
 end
