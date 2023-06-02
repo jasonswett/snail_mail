@@ -34,8 +34,6 @@ end
 
 def run
   offset = 0
-  total_count = nil
-
   recipients = []
   print "Downloading recipients..."
 
@@ -49,7 +47,7 @@ def run
     end
 
     response_json = JSON.parse(response.body)
-    total_count ||= response_json["total_count"]
+    total_count = response_json["total_count"]
 
     recipients += response_json["entries"].map do |entry|
       {
