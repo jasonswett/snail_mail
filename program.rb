@@ -16,6 +16,12 @@ def uri(offset)
   uri
 end
 
+def request(uri)
+  request = Net::HTTP::Get.new(uri)
+  request.basic_auth(ENV["GF_CONSUMER_KEY"], ENV["GF_CONSUMER_SECRET"])
+  request
+end
+
 def run
   offset = 0
   total_count = nil
@@ -25,8 +31,7 @@ def run
 
   loop do
     uri = uri(offset)
-    request = Net::HTTP::Get.new(uri)
-    request.basic_auth(ENV["GF_CONSUMER_KEY"], ENV["GF_CONSUMER_SECRET"])
+    request = request(uri)
 
     response = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => uri.scheme == 'https') do |http|
       http.request(request)
