@@ -6,6 +6,16 @@ require_relative "label_document"
 FORM_ID = 28
 PAGE_SIZE = 50
 
+def uri(offset)
+  uri = URI.parse("https://www.codewithjason.com/wp-json/gf/v2/entries")
+  uri.query = URI.encode_www_form({
+    'form_ids' => FORM_ID,
+    'paging[offset]' => offset,
+    'paging[page_size]' => PAGE_SIZE,
+  })
+  uri
+end
+
 def run
   offset = 0
   total_count = nil
@@ -14,13 +24,7 @@ def run
   print "Downloading recipients..."
 
   loop do
-    uri = URI.parse("https://www.codewithjason.com/wp-json/gf/v2/entries")
-    uri.query = URI.encode_www_form({
-      'form_ids' => FORM_ID,
-      'paging[offset]' => offset,
-      'paging[page_size]' => PAGE_SIZE,
-    })
-
+    uri = uri(offset)
     request = Net::HTTP::Get.new(uri)
     request.basic_auth(ENV["GF_CONSUMER_KEY"], ENV["GF_CONSUMER_SECRET"])
 
