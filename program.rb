@@ -22,6 +22,16 @@ def request(uri)
   request
 end
 
+def response(uri, request)
+  Net::HTTP.start(
+    uri.hostname,
+    uri.port,
+    :use_ssl => uri.scheme == 'https'
+  ) do |http|
+    http.request(request)
+  end
+end
+
 def run
   offset = 0
   total_count = nil
@@ -32,10 +42,7 @@ def run
   loop do
     uri = uri(offset)
     request = request(uri)
-
-    response = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-      http.request(request)
-    end
+    response = response(uri, request)
 
     if !response.code.to_i == 200
       raise "HTTP Request failed (status code #{response.code})"
