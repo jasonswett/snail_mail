@@ -44,7 +44,7 @@ def response_json(offset)
   JSON.parse(response.body)
 end
 
-def run
+def run_program
   offset = 0
   recipients = []
   print "Downloading recipients..."
@@ -73,5 +73,3 @@ def run
 
   puts "Done"
 end
-
-run
