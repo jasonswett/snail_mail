@@ -1,6 +1,6 @@
 require "webmock/rspec"
 
-require_relative "../program"
+require_relative "../recipient_list"
 
 ENTRIES_ENDPOINT_URL = "https://www.codewithjason.com/wp-json/gf/v2/entries"
 
