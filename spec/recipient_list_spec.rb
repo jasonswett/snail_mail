@@ -15,7 +15,7 @@ describe RecipientList do
         "total_count" => 1
       }
 
-      stub_address_request(
+      stub_wordpress_request(
         url: "https://www.codewithjason.com/wp-json/gf/v2/entries",
         response: wordpress_response_body
       )
@@ -30,7 +30,7 @@ describe RecipientList do
       )
     end
 
-    def stub_address_request(url:, response:)
+    def stub_wordpress_request(url:, response:)
       stub_request(
         :get,
         "#{url}?form_ids=28&paging%5Boffset%5D=0&paging%5Bpage_size%5D=50"
