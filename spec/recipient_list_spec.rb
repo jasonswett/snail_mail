@@ -3,7 +3,7 @@ require "webmock/rspec"
 require_relative "../recipient_list"
 
 describe RecipientList do
-  describe "consuming recipients from the WordPress API" do
+  describe "consuming recipient form entries from the WordPress API" do
     before do
       wordpress_response_body = {
         "entries" => [
