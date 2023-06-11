@@ -2,8 +2,6 @@ require "webmock/rspec"
 
 require_relative "../recipient_list"
 
-ENTRIES_ENDPOINT_URL = "https://www.codewithjason.com/wp-json/gf/v2/entries"
-
 describe RecipientList do
   describe "consuming recipients from the WordPress API" do
     before do
@@ -17,7 +15,10 @@ describe RecipientList do
         "total_count" => 1
       }
 
-      stub_address_request(wordpress_response_body)
+      stub_address_request(
+        url: "https://www.codewithjason.com/wp-json/gf/v2/entries",
+        response: wordpress_response_body
+      )
 
       @recipient_list = RecipientList.new
     end
@@ -29,13 +30,13 @@ describe RecipientList do
       )
     end
 
-    def stub_address_request(wordpress_response_body)
+    def stub_address_request(url:, response:)
       stub_request(
         :get,
-        "#{ENTRIES_ENDPOINT_URL}?form_ids=28&paging%5Boffset%5D=0&paging%5Bpage_size%5D=50"
+        "#{url}?form_ids=28&paging%5Boffset%5D=0&paging%5Bpage_size%5D=50"
       ).to_return(
         status: 200,
-        body: wordpress_response_body.to_json.to_s,
+        body: response.to_json.to_s,
         headers: {}
       )
     end
