@@ -1,10 +1,12 @@
+require_relative "recipient_list"
 require_relative "recipient_csv"
 require_relative "label_document"
 
 puts
 puts "Writing CSV..."
 
-recipient_csv = RecipientCSV.new(recipients)
+recipient_list = RecipientList.new
+recipient_csv = RecipientCSV.new(recipient_list.items)
 filename = recipient_csv.write
 
 puts
