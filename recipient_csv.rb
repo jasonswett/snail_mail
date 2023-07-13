@@ -6,7 +6,9 @@ class RecipientCSV
   end
 
   def write
-    filename = "recipients.csv"
+    timestamp = Time.now.strftime("%Y-%m-%d-%H-%M-%S")
+    FileUtils.mkdir_p(timestamp) unless Dir.exists?(timestamp)
+    filename = File.join(timestamp, "recipients.csv")
 
     CSV.open(filename, "wb") do |csv|
       csv << ["Name", "Address"]

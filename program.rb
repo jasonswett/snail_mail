@@ -8,12 +8,14 @@ puts "Writing CSV..."
 
 recipient_list = RecipientList.new
 recipient_csv = RecipientCSV.new(recipient_list.items)
-filename = recipient_csv.write
+csv_filename = recipient_csv.write
 
 puts
 puts "Rendering PDF..."
 
-label_document = LabelDocument.new(RecipientCSV.from_csv(filename))
-label_document.render_file("labels.pdf")
+label_document = LabelDocument.new(RecipientCSV.from_csv(csv_filename))
+directory = File.dirname(csv_filename)
+label_pdf_filename = File.join(directory, "labels.pdf")
+label_document.render_file(label_pdf_filename)
 
 puts "Done"
