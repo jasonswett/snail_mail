@@ -6,7 +6,7 @@ class LabelDocument < Prawn::Document
   COLUMN_COUNT = 3
   ROW_COUNT = 10
   FONT_SIZE = 8
-  TOP_MARGIN = 30
+  TOP_MARGIN = 10
   COLUMN_WIDTH_OFFSET = 40
 
   def initialize(recipients, options = {})

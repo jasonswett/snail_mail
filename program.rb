@@ -17,5 +17,6 @@ label_document = LabelDocument.new(RecipientCSV.from_csv(csv_filename))
 directory = File.dirname(csv_filename)
 label_pdf_filename = File.join(directory, "labels.pdf")
 label_document.render_file(label_pdf_filename)
+puts label_pdf_filename
 
 puts "Done"
