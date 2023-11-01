@@ -12,7 +12,6 @@ csv_filename = recipient_csv.write
 puts
 puts "Rendering PDF..."
 
-
 system("ruby make_labels.rb #{label_pdf_filename}")
 
 puts "Done"
